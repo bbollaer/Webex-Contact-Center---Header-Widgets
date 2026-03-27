@@ -1,6 +1,6 @@
 # Webex Contact Center - Header Widgets
 
-Demo Assets - not production ready - and delivered "as-is" allow you to display some real time KPIs in Webex Contact Center Agent Desltop header such as : 
+Demo Assets - not production ready - and delivered "as-is" allow you to display some real time KPIs in Webex Contact Center Agent Desktop header such as : 
 - number of calls in queue
 - average time in queue and average handle time for voice
 - email stock (emails in queue) 
@@ -21,12 +21,12 @@ Readme.MD
 
 ```
 
-## What you need to do to use this asset
+## How to use this asset
 
-- download the given javascript asset.
-- adapt is to your queue names.
-- host it on a web server.
-- update your Desktop Layout JSON file.
+- download the javascript of your choice
+- adapt is to your queue names
+- host it on a web server
+- update your Desktop Layout JSON file
 
 # "Email Stock" widget
 
@@ -34,8 +34,8 @@ Readme.MD
 
 1/ The javascript dynamically retrieves information coming from the Desktop Layout JSON file :
 - agent token
-- datacenter where your Webex Contact Center is present
-- orgid
+- Webex Contact Center datacenter region
+- Webex orgid
 
 ```
 var org = this.orgId;
@@ -45,7 +45,7 @@ var access_token = this.token;
 
 2/ Those 3 variables will be used to perform the Webex Contact Center REST API using the "Search" endpoint.
 
-The Search endpoint relies on a GraphQL query to retrieve all email in queue ("parked") for given queues since 14 days.
+The Search endpoint relies on a GraphQL query to retrieve the number of emails in queue ("parked") for given queues since 14 days.
 You will need to adapt the GraphQL query to point to your own queues using queue names.
 
 ```
@@ -70,7 +70,7 @@ You will need to adapt the GraphQL query to point to your own queues using queue
 }
 ```
 
-Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given Agent Token.
+Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given agent token.
 This will ensure that you only receive the queues that the logged-in agent is authorized to access.
 
 3/ Refresh the query every 5 seconds
@@ -83,8 +83,8 @@ This will ensure that you only receive the queues that the logged-in agent is au
 
 ## Edit your Desktop Layout JSON file
 
-To use it inside the Agent Desktop, you will need to refer your web component in the header section of your Desktop Layout JSON file.
-Add the following code and adapt the javascript file path to your web server.
+To utilize it within the Agent Desktop, it is necessary to reference your web component in the header section of your Desktop Layout JSON file.
+Add the following code and adjust the JavaScript file path to correspond with your web server.
 
 ```
     "area": {
@@ -114,8 +114,8 @@ Note : not all the properties are used in the javascript code, feel free to remo
 
 1/ The javascript dynamically retrieves information coming from the Desktop Layout JSON file :
 - agent token
-- datacenter where your Webex Contact Center is present
-- orgid
+- Webex Contact Center datacenter region
+- Webex orgid
 
 ```
 var org = this.orgId;
@@ -157,7 +157,7 @@ You will need to adapt the GraphQL query to point to your own queues using queue
 }
 ```
 
-Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given Agent token.
+Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given agent token.
 This will ensure that you only receive the queues that the logged-in agent is authorized to access.
 
 If you are interested in other task metrics you can find some in our samples available here : https://github.com/WebexSamples/webex-contact-center-api-samples/tree/main/reporting-samples/graphql-sample.
@@ -185,8 +185,8 @@ You can adapt the code (duration in milliseconds) in the section below :
 
 ## Edit your Desktop Layout JSON file
 
-You will now integrate your web component by adding into the header section of your Desktop Layout JSON file.
-Add the following code and adapt the javascript file path to your web server.
+To utilize it within the Agent Desktop, it is necessary to reference your web component in the header section of your Desktop Layout JSON file.
+Add the following code and adjust the JavaScript file path to correspond with your web server.
 
 ```
     "area": {
@@ -217,8 +217,8 @@ Note : not all the properties are used in the javascript code, feel free to remo
 
 1/ The javascript dynamically retrieves information coming from the Desktop Layout JSON file :
 - agent token
-- datacenter where your Webex Contact Center is present
-- orgid
+- Webex Contact Center datacenter region
+- Webex orgid
 
 ```
 var org = this.orgId;
@@ -259,7 +259,7 @@ You will need to adapt the GraphQL query to point to your own queues using queue
 }
 ```
 
-Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given Agent Token.
+Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given agent token.
 This will ensure that you only receive the queues that the logged-in agent is authorized to access.
 
 3/ Displays a color-coded KPI.
@@ -282,8 +282,8 @@ You can adapt the code here :
 
 ## Edit your Desktop Layout JSON file
 
-To use it inside the Agent Desktop, you will need to refer your web component in the header section of your Desktop Layout JSON file.
-Add the following code and adapt the javascript file path to your web server.
+To utilize it within the Agent Desktop, it is necessary to reference your web component in the header section of your Desktop Layout JSON file.
+Add the following code and adjust the JavaScript file path to correspond with your web server.
 
 ```
     "area": {
