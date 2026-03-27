@@ -28,6 +28,8 @@ Readme.MD
 - host it on a web server
 - update your Desktop Layout JSON file
 
+
+
 # "Email Stock" widget
 
 ## What the javascript file does
@@ -43,7 +45,7 @@ var dc = this.dc.slice(4); // you will get "eu2" from "prodeu2" for instance
 var access_token = this.token;
 ```
 
-2/ Those 3 variables will be used to perform the Webex Contact Center REST API using the "Search" endpoint.
+2/ The 3 variables will be employed to execute the Webex Contact Center REST API via the "Search" endpoint.
 
 The Search endpoint relies on a GraphQL query to retrieve the number of emails in queue ("parked") for given queues since 14 days.
 You will need to adapt the GraphQL query to point to your own queues using queue names.
@@ -108,6 +110,8 @@ Add the following code and adjust the JavaScript file path to correspond with yo
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
 
+
+
 # "Average Time In Queue and Average Handle Time" widget
 
 ## What the javascript file does
@@ -123,7 +127,7 @@ var dc = this.dc.slice(4); // you will get "eu2" from "prodeu2" for instance
 var access_token = this.token;
 ```
 
-2/ Those 3 variables will be used to perform the Webex Contact Center REST API using the "Search" endpoint.
+2/ The 3 variables will be employed to execute the Webex Contact Center REST API via the "Search" endpoint.
 
 The Search endpoint relies on a GraphQL query to retrieve agregated "queueDuration" and "totalDuration" since 6am.
 You will need to adapt the GraphQL query to point to your own queues using queue names.
@@ -211,6 +215,8 @@ Add the following code and adjust the JavaScript file path to correspond with yo
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
 
+
+
 # "Calls in Queue" widget
 
 ## What the javascript file does
@@ -226,7 +232,7 @@ var dc = this.dc.slice(4); // you will get "eu2" from "prodeu2" for instance
 var access_token = this.token;
 ```
 
-2/ Those 3 variables will be used to perform the Webex Contact Center REST API using the "Search" endpoint.
+2/ The 3 variables will be employed to execute the Webex Contact Center REST API via the "Search" endpoint.
 
 The Search endpoint relies on a GraphQL query to retrieve all active inbound calls in queues for given queues.
 You will need to adapt the GraphQL query to point to your own queues using queue names.
