@@ -1,6 +1,6 @@
 # Webex Contact Center - Header Widgets
 
-Demo Assets - not production ready - and delivered "as-is" allows you to display some real time KPIs in Webex Contact Center Agent Desltop header such as : 
+Demo Assets - not production ready - and delivered "as-is" allow you to display some real time KPIs in Webex Contact Center Agent Desltop header such as : 
 - number of calls in queue
 - average time in queue and average handle time for voice
 - email stock (emails in queue) 
@@ -23,10 +23,10 @@ Readme.MD
 
 ## What you need to do to use this asset
 
-1 - download the given javascript asset.
-2 - adapt is to your queue names.
-3 - host it on a web server.
-4 - update your Desktop Layout JSON file.
+- download the given javascript asset.
+- adapt is to your queue names.
+- host it on a web server.
+- update your Desktop Layout JSON file.
 
 # "Email Stock" widget
 
