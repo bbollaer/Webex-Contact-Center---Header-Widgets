@@ -2,7 +2,7 @@
   const template = document.createElement("template");
   template.innerHTML = `<div id="table-container"></div>`;
 
-  class NbAppelsEnFile extends HTMLElement {
+  class EmailEnFile14j extends HTMLElement {
     constructor() {
       super();
       this.attachShadow({ mode: "open" });
@@ -23,30 +23,27 @@
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Bearer " + access_token);
         const currentTimeMs = Date.now().toString();
+        const nowMs = Date.now();
+        const jMinus14Ms = (nowMs - 14 * 24 * 60 * 60 * 1000).toString();
+        console.log("[STOCKEMAIL] - Now-14j -> ", jMinus14Ms);
         const raw = JSON.stringify({
           query: `
 {
   task(
-    from: "1767874520000"
+    from: "${jMinus14Ms}"
     to: "${currentTimeMs}"
-     filter: {
+    timeComparator: createdTime
+    filter: {
       and: [
-        { channelType: { equals: telephony } } 
-        { isActive: { equals: true } }
+        { channelType: { equals: email } }
         { status: { equals: "parked" } } 
-        { direction: { equals: "inbound" } } 
-        { 
-            or: [
-                { lastQueue: { name: { equals: "YOUR_VOICE_QUEUE1_NAME_HERE" } } }
-                { lastQueue: { name: { equals: "YOUR_VOICE_QUEUE2_NAME_HERE" } } }
-            ]
-        }
+        { direction: { equals: "inbound" } }
+        { lastQueue: { name: { contains: "YOUR_EMAIL_QUEUE_NAME_HERE" } } }   
       ]
     }
-    aggregations: [{ field: "id", type: count, name: "NbCallsInQueue" }]
+    aggregations: [{ field: "id", type: count, name: "TotalStock" }]
   ) {
-    tasks {
-      aggregation { name value }
+    tasks { aggregation { name value }
     }
   }
 }
@@ -67,49 +64,38 @@
         )
           .then((response) => response.text())
           .then((result) => DisplayTasks(JSON.parse(result), context))
-          .catch((error) => console.log("[NBAPPELSENFILE] - Erreur -> ", error));
+          .catch((error) => console.log("[STOCKEMAIL] - ERROR - ", error));
       }
 
         function DisplayTasks(result, context) {
-            console.log("[NBAPPELSENFILE]: résultat -> ", result);
+            console.log("[STOCKEMAIL]: result", result);
             const tableContainer = context.getElementById("table-container");
 
             if (!result.data || !result.data.task || !result.data.task.tasks) {
-                // tableContainer.innerHTML = "<p>Rien retourné.</p>";
+                console.log("[STOCKEMAIL]: rien en file d'attente sur ces derniers 14 jours");
                 return;
             }
 
             const tasks = result.data.task.tasks;
-            console.log("[NBAPPELSENFILE]: Tâches trouvées -> ", tasks);
+            console.log("[STOCKEMAIL]: tasks -> ", tasks);
             tableContainer.innerHTML = generateTaskTable(tasks);
         }
 
         function generateTaskTable(tasks) {
-            let nbAppelsEnFile = 0;
+            let EmailInQueue = 0;
             tasks.forEach((task) => {
-                const aggregation = task.aggregation.find(a => a.name === "NbCallsInQueue");
+                const aggregation = task.aggregation.find(a => a.name === "TotalStock");
                 if (aggregation) {
-                    nbAppelsEnFile += aggregation.value;
-                    console.log("[NBAPPELSENFILE]: Nb appels en file -> ", nbAppelsEnFile);
+                    EmailInQueue += aggregation.value;
+                    console.log("[STOCKEMAIL]: ici -> EmailInQueue ", EmailInQueue);
                 }
             });
-            let table = '';
-            let isAlert = nbAppelsEnFile > 0;
-            let bgColor = isAlert ? "#e53935" : "#43a047";
-
-table += `
-<span style="background:${bgColor}; color:white; padding:2px 8px; border-radius:10px; font-family:Roboto, sans-serif; font-size:12px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white" viewBox="0 0 24 24">
-<path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 
-1 0 011-.27c1.12.37 2.33.57 3.59.57a1 
-1 0 011 1V21a1 1 0 01-1 1C10.07 22 2 13.93 2 
-4a1 1 0 011-1h3.5a1 1 0 011 1c0 
-1.26.2 2.47.57 3.59a1 1 0 01-.25 1l-2.2 2.2z"/>
-</svg>${nbAppelsEnFile}
-</span>
-`;
+            let table = `<div style="display:flex; gap:8px; align-items:center;"><span style="background:#000080; color:white; padding:2px 8px; border-radius:10px; font-family:Roboto, sans-serif; font-size:12px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>${EmailInQueue}</span>`;
             return table;
         }
+
         // Rafraîchissement toutes les 5 secondes
         this.intervalID = setInterval(() => {
             GetCallsInQueue({ token: access_token });
@@ -122,5 +108,5 @@ table += `
         }
     }  
   }
-  customElements.define("nb-appels-en-file", NbAppelsEnFile);
+  customElements.define("stock-email-14j", EmailEnFile14j);
 })();
