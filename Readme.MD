@@ -105,7 +105,7 @@ Add the following code and adjust the JavaScript file path to correspond with yo
               "teamName": "STORE.agent.teamName"    
           }
         },
-    ...
+        ...
 ```
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
@@ -169,7 +169,7 @@ You will need to adapt the GraphQL query to point to your own queues using queue
 Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given agent token.
 This will ensure that you only receive the queues that the logged-in agent is authorized to access.
 
-Calcaulation : Average Handle Time = Talk Time + Hold Time + Consult + Conference + ConsultToQueue + WrapUp.
+Calculation : Average Handle Time = Talk Time + Hold Time + Consult Time + Conference Time + ConsultToQueue Time + WrapUp Time.
 If you are interested in other task metrics you can find some in our samples available here : https://github.com/WebexSamples/webex-contact-center-api-samples/tree/main/reporting-samples/graphql-sample.
 
 3/ Display color-coded KPIs.
@@ -215,8 +215,7 @@ Add the following code and adjust the JavaScript file path to correspond with yo
               "teamName": "STORE.agent.teamName"    
           }
         },
-    },
-    ...
+        ...
 ```
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
@@ -312,9 +311,9 @@ Add the following code and adjust the JavaScript file path to correspond with yo
                 "dc": "$STORE.app.datacenter",
                 "teamId": "$STORE.agent.teamId",   
                 "teamName": "STORE.agent.teamName"    
-        }
-    },
-    ...
+            }
+        },
+      ...
 ```
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
