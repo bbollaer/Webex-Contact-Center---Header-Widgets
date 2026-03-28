@@ -41,15 +41,20 @@
         { direction: { equals: "inbound" } }
         { 
             or: [
-                { lastQueue: { name: { equals: "Q_Voice_NAME1" } } }
-                { lastQueue: { name: { equals: "Q_Voice_NAME1" } } }
+                { lastQueue: { name: { equals: "YOUR_VOICE_QUEUE_NAME1_HERE" } } }
+                { lastQueue: { name: { equals: "YOUR_VOICE_QUEUE_NAME2_HERE" } } }
             ]
         }
       ]
     }
     aggregations: [
       { field: "queueDuration", type: average, name: "AverageQueueTime" }
-      { field: "totalDuration", type: average, name: "AHT"}
+      { field: "connectedDuration", type: average, name: "Talk"}
+      { field: "holdDuration", type: average, name: "Hold"}
+      { field: "wrapupDuration", type: average, name: "WrapUp"}
+      { field: "consultDuration", type: average, name: "Consult"}
+      { field: "conferenceDuration", type: average, name: "Conference"}
+      { field: "consultToQueueDuration", type: average, name: "ConsultToQueue"}
     ]
   ) {
     tasks { aggregation { name value }
@@ -77,7 +82,7 @@
       }
 
         function DisplayTasks(result, context) {
-            console.log("[STATFILES]: result", result);
+            console.log("STATFILES: result", result);
             const tableContainer = context.getElementById("table-container");
 
             if (!result.data || !result.data.task || !result.data.task.tasks) {
@@ -86,28 +91,42 @@
             }
 
             const tasks = result.data.task.tasks;
-            console.log("[STATFILES]: tasks -> ", tasks);
+            console.log("STATFILES: tasks -> ", tasks);
             tableContainer.innerHTML = generateTaskTable(tasks);
         }
 
         function generateTaskTable(tasks) {
-            let AverageQueueTime = 0;
+            let AQT = 0;
             let AHT = 0;
             tasks.forEach((task) => {
-                const aggregation = task.aggregation.find(a => a.name === "AverageQueueTime");
-                if (aggregation) {
-                    AverageQueueTime += aggregation.value;
-                    console.log("[STATFILES]: ici -> AverageQueueTime ", AverageQueueTime);
-                }
-                const aggregation2 = task.aggregation.find(a => a.name === "AHT");
-                if (aggregation2) {
-                    AHT += aggregation2.value;
-                    console.log("[STATFILES]: ici AHT-> ", AHT);
-                }
+
+                // Average Queue Time
+
+                const AverageQueueTime = task.aggregation.find(a => a.name === "AverageQueueTime");
+                if (AverageQueueTime) { AQT += AverageQueueTime.value; }
+
+                // Average Handle Time
+
+                const Talk = task.aggregation.find(a => a.name === "Talk");
+                if (Talk) { AHT += Talk.value; }
+
+                const Hold = task.aggregation.find(a => a.name === "Hold");
+                if (Hold) { AHT += Hold.value; }
+
+                const Conference = task.aggregation.find(a => a.name === "Conference");
+                if (Conference) { AHT += Conference.value; }
+
+                const ConsultToQueue = task.aggregation.find(a => a.name === "ConsultToQueue");
+                if (ConsultToQueue) { AHT += ConsultToQueue.value; }
+
+                const WrapUp = task.aggregation.find(a => a.name === "WrapUp");
+                if (WrapUp) { AHT += WrapUp.value; }
+
+                console.log("STATFILES: ici -> Average Handle Time ", AHT);
 
             });
 let table = `<div style="display:flex; gap:8px; align-items:center;">`;
-            let isAlert = AverageQueueTime > 120000;
+            let isAlert = AQT > 120000;
             let bgColor = isAlert ? "#e53935" : "#43a047";
             let isAlert2 = AHT > 150000;
             let bgColor2 = isAlert2 ? "#e53935" : "#43a047";
@@ -119,11 +138,11 @@ table += `<span style="background:${bgColor}; color:white; padding:2px 8px; bord
   <path d="M12 13l3-2"/>
   <path d="M9 2h6"/>
 </svg>
-${formatMs(AverageQueueTime)}
+${formatMs(AQT)}
 </span>`;
 
 table += `<span style="background:${bgColor2}; color:white; padding:2px 8px; border-radius:10px; font-family:Roboto, sans-serif; font-size:12px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">
-DMT : ${formatMs(AHT)}
+AHT : ${formatMs(AHT)}
 </span>`;
 table += `</div>`;
 
