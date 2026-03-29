@@ -52,9 +52,6 @@
       { field: "connectedDuration", type: average, name: "Talk"}
       { field: "holdDuration", type: average, name: "Hold"}
       { field: "wrapupDuration", type: average, name: "WrapUp"}
-      { field: "consultDuration", type: average, name: "Consult"}
-      { field: "conferenceDuration", type: average, name: "Conference"}
-      { field: "consultToQueueDuration", type: average, name: "ConsultToQueue"}
     ]
   ) {
     tasks { aggregation { name value }

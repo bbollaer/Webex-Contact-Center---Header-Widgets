@@ -155,9 +155,6 @@ You will need to adapt the GraphQL query to point to your own queues using queue
       { field: "connectedDuration", type: average, name: "Talk"}
       { field: "holdDuration", type: average, name: "Hold"}
       { field: "wrapupDuration", type: average, name: "WrapUp"}
-      { field: "consultDuration", type: average, name: "Consult"}
-      { field: "conferenceDuration", type: average, name: "Conference"}
-      { field: "consultToQueueDuration", type: average, name: "ConsultToQueue"}
     ]
   ) {
     tasks { aggregation { name value }
@@ -169,7 +166,7 @@ You will need to adapt the GraphQL query to point to your own queues using queue
 Note : you can generate the queue list dynamically by making an extra Webex Contact Center API call using the given agent token.
 This will ensure that you only receive the queues that the logged-in agent is authorized to access.
 
-Calculation : Average Handle Time = Talk Time + Hold Time + Consult Time + Conference Time + ConsultToQueue Time + WrapUp Time.
+Calculation : Average Handle Time = Talk Time + Hold Time + WrapUp Time.
 If you are interested in other task metrics you can find some in our samples available here : https://github.com/WebexSamples/webex-contact-center-api-samples/tree/main/reporting-samples/graphql-sample.
 
 3/ Display color-coded KPIs.
