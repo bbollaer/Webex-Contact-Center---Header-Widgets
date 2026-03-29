@@ -110,12 +110,6 @@
                 const Hold = task.aggregation.find(a => a.name === "Hold");
                 if (Hold) { AHT += Hold.value; }
 
-                const Conference = task.aggregation.find(a => a.name === "Conference");
-                if (Conference) { AHT += Conference.value; }
-
-                const ConsultToQueue = task.aggregation.find(a => a.name === "ConsultToQueue");
-                if (ConsultToQueue) { AHT += ConsultToQueue.value; }
-
                 const WrapUp = task.aggregation.find(a => a.name === "WrapUp");
                 if (WrapUp) { AHT += WrapUp.value; }
 
