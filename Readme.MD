@@ -26,9 +26,10 @@ Readme.MD
 ## How to use this asset
 
 - download the javascript of your choice
-- adapt is to your queue names
+- adapt is to your queue names if needed
 - host it on a web server
 - update your Desktop Layout JSON file
+- refresh your browser 
 
 
 
