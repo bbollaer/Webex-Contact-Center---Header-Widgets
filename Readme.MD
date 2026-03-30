@@ -17,6 +17,7 @@ Readme.MD
 │   └── callsinqueue.js
 │   └── awtaht4voice.js
 │   └── emailstock.js
+│   └── agentsconnected.js
 ├── images/                    
 │   └── headerwidgets.png
 
