@@ -315,6 +315,86 @@ Add the following code and adjust the JavaScript file path to correspond with yo
 
 Note : not all the properties are used in the javascript code, feel free to remove unused ones.
 
+
+# "Agents Loggued In" widget
+
+## What the javascript file does
+
+1/ The javascript dynamically retrieves information coming from the Desktop Layout JSON file :
+- agent token
+- Webex Contact Center datacenter region
+- Webex orgid
+- Agent Team Name
+
+
+```
+var org = this.orgId;
+var dc = this.dc.slice(4); // you will get "eu2" from "prodeu2" for instance
+var access_token = this.token;
+var teamName = this.teamName;
+
+```
+
+2/ The 4 variables will be employed to execute the Webex Contact Center REST API via the "Search" endpoint.
+
+The Search endpoint relies on a GraphQL query to retrieve all agents loggued into the Agent Desktop with the same team.
+
+```
+{
+    agentSession(
+    from: "1767874520000" 
+    to: "${currentTimeMs}"
+    filter: {
+        and: [
+            { isActive: { equals: true } }
+            { teamName: { equals: "${teamName}" } }
+        ]
+    }
+        aggregations: [
+            { field: "agentId", name: "AgentsConnectes", type: cardinality }
+        ]
+    ) {
+        agentSessions {
+            aggregation {
+                name
+                value
+            }
+        }
+    }
+}
+```
+
+4/ Refresh the query every 5 seconds
+
+```
+    this.intervalID = setInterval(() => {
+        GetCallsInQueue({ token: access_token });
+    }, 5000);
+```
+
+## Edit your Desktop Layout JSON file
+
+To utilize it within the Agent Desktop, it is necessary to reference your web component in the header section of your Desktop Layout JSON file.
+Add the following code and adjust the JavaScript file path to correspond with your web server.
+
+```
+    "area": {
+    "advancedHeader": [
+        ...
+        {
+            "comp": "agents-connectes",
+            "script": "https://yourwebserver.com/agentconnected.js",
+            "properties": {
+					      "token": "$STORE.auth.accessToken",
+                "darkmode": "$STORE.app.darkMode",
+					      "orgId": "$STORE.agent.orgId",
+					      "dc": "$STORE.app.datacenter",
+                "teamName": "$STORE.agent.teamName"
+            }
+        },
+      ...
+```
+
 # Disclaimer
 
 This archive is for educational and research purposes.
