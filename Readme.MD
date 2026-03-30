@@ -4,6 +4,7 @@ Demo Assets - not production ready - and delivered "as-is" allow you to display 
 - number of calls in queue
 - average time in queue and average handle time for voice
 - email stock (emails in queue) 
+- number of agents connected to the Agent Desktop within the same Team
 
 
 ![Screenshot](./images/headerwidgets.png)
